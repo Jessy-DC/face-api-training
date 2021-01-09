@@ -1,28 +1,47 @@
 import './App.css';
 import React, {useEffect} from 'react';
 import * as faceapi from "face-api.js";
-import ted from './ted.jpg'
+
+function startVideo(video) {
+    navigator.getUserMedia(
+        {video : {}},
+        stream => video.srcObject = stream,
+        error => console.log(error)
+    )
+}
 
 function App() {
-    async function test() {
-        await faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
-        await faceapi.nets.faceRecognitionNet.loadFromUri('/models')
-        await faceapi.nets.faceLandmark68Net.loadFromUri('/models')
-        await faceapi.nets.ageGenderNet.loadFromUri('/models')
-
-        const input = document.getElementById('myImg')
-        const detectionsWithAgeAndGender = await faceapi.detectAllFaces(input).withFaceLandmarks().withAgeAndGender()
-        console.log(detectionsWithAgeAndGender);
-    }
-
     useEffect(() => {
-        test();
+        const video = document.getElementById("inputVideo")
+        Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+            faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+            faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+            faceapi.nets.faceExpressionNet.loadFromUri('/models')
+        ]).then(startVideo(video))
+
+        video.addEventListener('play', () => {
+            const canvas = faceapi.createCanvasFromMedia(video)
+            document.body.append(canvas)
+            const displaySize = {width: video.width, height: video.height}
+            faceapi.matchDimensions(canvas, displaySize)
+
+            setInterval(async () => {
+                const detections = await faceapi.detectAllFaces(video,
+                    new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks()
+                    .withFaceExpressions()
+                const resizedDetections = faceapi.resizeResults(detections,
+                    displaySize)
+                canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+                faceapi.draw.drawDetections(canvas, resizedDetections)
+            })
+        })
     }, []);
 
   return (
     <div className="App">
         <h1>Hello World !</h1>
-        <img id="myImg" src={ted} alt="test" />
+        <video id="inputVideo" width={720} height={560} autoPlay muted>MyVideo</video>
     </div>
   );
 }
