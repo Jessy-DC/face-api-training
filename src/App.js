@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import * as faceapi from "face-api.js";
 
 function startVideo(video) {
@@ -32,9 +32,11 @@ function App() {
                     .withFaceExpressions()
                 const resizedDetections = faceapi.resizeResults(detections,
                     displaySize)
+
                 canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
                 faceapi.draw.drawDetections(canvas, resizedDetections)
-            })
+                faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
+            }, 100)
         })
     }, []);
 
