@@ -1,14 +1,7 @@
 import './App.css';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import * as faceapi from "face-api.js";
-
-function startVideo(video) {
-    navigator.getUserMedia(
-        {video : {}},
-        stream => video.srcObject = stream,
-        error => console.log(error)
-    )
-}
+import {startVideo} from "./video/video";
 
 function App() {
     useEffect(() => {
@@ -43,7 +36,7 @@ function App() {
   return (
     <div className="App">
         <h1>Hello World !</h1>
-        <video id="inputVideo" width={720} height={560} autoPlay muted>MyVideo</video>
+        <video id="inputVideo" width={720} height={560} controls={true} autoPlay muted >MyVideo</video>
     </div>
   );
 }
