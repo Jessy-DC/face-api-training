@@ -1,9 +1,17 @@
 import './App.css';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import * as faceapi from "face-api.js";
 import {startVideo} from "./video/video";
+import {ThemeProvider} from "styled-components";
+import { GlobalStyles} from "./style/GlobalStyles";
+import { lightMode, darkMode } from "./style/Theme"
 
 function App() {
+    const [theme, setTheme] = useState('light');
+    const themeToggler = () => {
+        theme === 'light' ? setTheme('dark') : setTheme('light')
+    }
+
     useEffect(() => {
         const video = document.getElementById("inputVideo")
         Promise.all([
@@ -34,10 +42,18 @@ function App() {
     }, []);
 
   return (
-    <div className="App">
-        <h1>Hello World !</h1>
-        <video id="inputVideo" width={720} height={560} controls={true} autoPlay muted >MyVideo</video>
-    </div>
+      <ThemeProvider theme={theme === 'light' ? lightMode : darkMode}>
+          <>
+              <GlobalStyles/>
+              <div className="App">
+                   <h1>Hello World !</h1>
+                   <video id="inputVideo" width={720} height={560} controls={true} autoPlay muted >MyVideo</video>
+              </div>
+              <div>
+                  <button onClick={themeToggler}>Switch to {theme === 'light' ? 'dark' : 'light'} mode</button>
+              </div>
+          </>
+      </ThemeProvider>
   );
 }
 
