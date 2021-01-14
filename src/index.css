@@ -7,10 +7,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
   width: 100vw;
-  height: 100vw;
   display: flex;
   justify-content: center;
   align-items:center;
+  max-width: 100%;
 }
 
 code {
