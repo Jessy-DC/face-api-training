@@ -5,11 +5,15 @@ import {startVideo} from "./video/video";
 import {ThemeProvider} from "styled-components";
 import { GlobalStyles} from "./style/GlobalStyles";
 import { lightMode, darkMode } from "./style/Theme"
+import Switch from "react-switch";
 
 function App() {
     const [theme, setTheme] = useState('light');
+    const [checked, setChecked] = useState(false);
+
     const themeToggler = () => {
         theme === 'light' ? setTheme('dark') : setTheme('light')
+        checked === true ? setChecked(false) : setChecked(true)
     }
 
     useEffect(() => {
@@ -43,16 +47,17 @@ function App() {
 
   return (
       <ThemeProvider theme={theme === 'light' ? lightMode : darkMode}>
-          <>
-              <GlobalStyles/>
-              <div className="App">
-                   <h1>Hello World !</h1>
-                   <video id="inputVideo" width={720} height={560} controls={true} autoPlay muted >MyVideo</video>
-              </div>
-              <div>
-                  <button onClick={themeToggler}>Switch to {theme === 'light' ? 'dark' : 'light'} mode</button>
-              </div>
-          </>
+          <GlobalStyles/>
+          <div className="App">
+               <h1>Hello World !</h1>
+               <video id="inputVideo" width={720} height={560} controls={true} autoPlay muted >MyVideo</video>
+          </div>
+          <div>
+              <label>
+                  <span>Switch to {theme === 'light' ? 'dark' : 'light'} mode</span>
+                  <Switch onChange={themeToggler} checked={checked} />
+              </label>
+          </div>
       </ThemeProvider>
   );
 }
