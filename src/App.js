@@ -49,7 +49,7 @@ function App() {
       <ThemeProvider theme={theme === 'light' ? lightMode : darkMode}>
           <GlobalStyles/>
           <div className="App">
-               <h1>Hello World !</h1>
+               <h1 id="HelloWorld">Hello World !</h1>
                <video id="inputVideo" width={720} height={560} controls={true} autoPlay muted >MyVideo</video>
           </div>
           <div>
