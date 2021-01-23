@@ -6,14 +6,15 @@ import {ThemeProvider} from "styled-components";
 import { GlobalStyles} from "./style/GlobalStyles";
 import { lightMode, darkMode } from "./style/Theme"
 import Switch from "react-switch";
+import './style/navbar.css'
 
 function App() {
-    const [theme, setTheme] = useState('light');
-    const [checked, setChecked] = useState(false);
+    const [theme, setTheme] = useState('dark');
+    const [checked, setChecked] = useState(true);
 
     const themeToggler = () => {
         theme === 'light' ? setTheme('dark') : setTheme('light')
-        checked === true ? setChecked(false) : setChecked(true)
+        checked === false ? setChecked(true) : setChecked(false)
     }
 
     useEffect(() => {
@@ -46,18 +47,20 @@ function App() {
     }, []);
 
   return (
-      <ThemeProvider theme={theme === 'light' ? lightMode : darkMode}>
+      <ThemeProvider theme={theme === 'dark' ? darkMode : lightMode}>
           <GlobalStyles/>
-          <div className="App">
-               <h1 id="HelloWorld">Hello World !</h1>
-               <video id="inputVideo" width={720} height={560} controls={true} autoPlay muted >MyVideo</video>
-          </div>
-          <div>
-              <label>
-                  <span>Switch to {theme === 'light' ? 'dark' : 'light'} mode</span>
+          <div className="Navbar">
+              <div className="header">
+                  <header>My navbar</header>
+                  <span>{theme === 'dark' ? 'Light' : 'Dark'} mode</span>
                   <Switch onChange={themeToggler} checked={checked} />
-              </label>
+              </div>
+              <div className="App content">
+                  <h1 id="HelloWorld">Hello World !</h1>
+                  <video id="inputVideo" width={720} height={560} controls={true} muted >MyVideo</video>
+              </div>
           </div>
+
       </ThemeProvider>
   );
 }

@@ -1,0 +1,14 @@
+.Navbar {
+    display: grid;
+    grid-template-rows: 7.5% 92.5%;
+    justify-content: space-between;
+}
+
+.header {
+    display: grid;
+    background-color: transparent;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    grid-template-columns: 20% 20% 20% 40%;
+}

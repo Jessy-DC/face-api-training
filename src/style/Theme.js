@@ -5,7 +5,7 @@ export const lightMode = {
     background: '#363537',
 }
 export const darkMode = {
-    body: '#363537',
+    body: '#1a1d29',
     text: '#FAFAFA',
     toggleBorder: '#6B8096',
     background: '#999',
