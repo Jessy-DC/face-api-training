@@ -51,8 +51,8 @@ function App() {
           <GlobalStyles/>
           <div className="Navbar">
               <div className="header">
-                  <header>My navbar</header>
-                  <span>{theme === 'dark' ? 'Light' : 'Dark'} mode</span>
+                  <span>FaceApp</span>
+                  <span>{theme === 'dark' ? 'Dark' : 'Ligth'} mode</span>
                   <Switch onChange={themeToggler} checked={checked} />
               </div>
               <div className="App content">
